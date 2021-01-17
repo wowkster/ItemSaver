@@ -1,0 +1,24 @@
+messages:
+  prefix: "&7[&bItemSaver&7] &e"
+
+  no-permission: "&cYou do not have permission to use that command."
+  console: "You cannot use this command from the console."
+  save-item:
+    invalid:
+      no-args: "Invalid Command. Usage: /save-item <path>"
+      to-many-args: "Invalid Command because of excess arguments. Usage: /save-item <path>"
+    overwriting: "&cOverwriting Previous Entry For: %PATH%"
+    added-to-file: "Added %PATH% to items.yml"
+  give-item:
+    invalid:
+      no-args: "Invalid Command. Usage: /give-item <path> [amount]"
+      to-many-args: "Invalid Command because of excess arguments. Usage: /give-item <path> [amount]"
+    deserial-error: "&cAn error occurred deserializing %PATH%. Make sure that you spelled it correctly and that it is a valid entry in items.yml"
+    number-format-exception: "&cThe second argument could not be parsed to an integer. Make sure you spelled it correctly and try again."
+    add-to-inv: "Added %PATH% to inventory"
+  reload:
+    config: "Reloaded Config"
+    items: "Reloaded Items"
+    no-args: "Invalid Command. Usage: /itemsaver reload <config | items>"
+    to-many-args: "Invalid Command because of excess arguments. Usage: /itemsaver reload <config | items>"
+    unknown-arg: "Invalid Command. Unknown argument %ARG%. Usage: /itemsaver reload <config | items>"

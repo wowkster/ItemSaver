@@ -1,0 +1,12 @@
+name: ItemSaver
+version: 1.0
+main: com.adrianwowk.itemsaver.SpigotPlugin
+author: Adrian Wowk
+commands:
+  save-item:
+  give-item:
+  itemsaver:
+api-version: 1.14
+permissions:
+  itemsaver.use:
+    default: op
