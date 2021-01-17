@@ -1,3 +1,6 @@
+#Whether or not to add example item to items.yml on enable
+example: true
+
 messages:
   prefix: "&7[&bItemSaver&7] &e"
 

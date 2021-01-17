@@ -41,15 +41,17 @@ public class SpigotPlugin extends JavaPlugin {
 
         itemsFile = YamlConfiguration.loadConfiguration(file);
 
-        ItemStack item = new ItemStack(Material.PAPER);
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.GOLD + "Example");
-        meta.setLore(new ArrayList<>(Arrays.asList(ChatColor.AQUA + "Lore Line 1", ChatColor.RED + "Lore Line 2")));
-        meta.addEnchant(Enchantment.LOOT_BONUS_MOBS, 3, true);
-        meta.addEnchant(Enchantment.FIRE_ASPECT, 2, true);
-        meta.addEnchant(Enchantment.DAMAGE_ALL, 5, true);
-        item.setItemMeta(meta);
-        serializeItem(item, "example");
+        if (getConfig().getBoolean("example")) {
+            ItemStack item = new ItemStack(Material.PAPER);
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName(ChatColor.GOLD + "Example");
+            meta.setLore(new ArrayList<>(Arrays.asList(ChatColor.AQUA + "Lore Line 1", ChatColor.RED + "Lore Line 2")));
+            meta.addEnchant(Enchantment.LOOT_BONUS_MOBS, 3, true);
+            meta.addEnchant(Enchantment.FIRE_ASPECT, 2, true);
+            meta.addEnchant(Enchantment.DAMAGE_ALL, 5, true);
+            item.setItemMeta(meta);
+            serializeItem(item, "example");
+        }
 
     }
 
@@ -61,7 +63,7 @@ public class SpigotPlugin extends JavaPlugin {
 
         this.saveDefaultConfig();
 
-        Metrics metrics = new Metrics(this, 10032);
+        Metrics metrics = new Metrics(this, 10032   );
 
         // Server Console Message
         console.sendMessage(getPrefix() + "Successfully enabled :)");
@@ -118,9 +120,6 @@ public class SpigotPlugin extends JavaPlugin {
                 if (serializeItem(item, args[0])){
                     player.sendMessage(translate("messages.save-item.overwriting").replace("%PATH%", args[0]));
                 }
-
-                save();
-                reload();
 
                 player.sendMessage(translate("messages.save-item.added-to-file").replace("%PATH%", args[0]));
             } else {
@@ -225,10 +224,11 @@ public class SpigotPlugin extends JavaPlugin {
 
         if (meta.hasLore()) {
             List<String> lore = meta.getLore();
+            List<String> newLore = new ArrayList<>();
             for (String line : lore) {
-                line = unTranslateAlternateColorCodes(line);
+                newLore.add(unTranslateAlternateColorCodes(line));
             }
-            section.set("lore", lore);
+            section.set("lore", newLore);
         }
         if (meta.hasEnchants()) {
 
@@ -238,6 +238,9 @@ public class SpigotPlugin extends JavaPlugin {
             for (Enchantment ench : enchants.keySet())
                 enchantSection.set(ench.getKey().getKey(), enchants.get(ench));
         }
+
+        save();
+        reload();
         return overWritten;
     }
 
@@ -266,11 +269,12 @@ public class SpigotPlugin extends JavaPlugin {
 
         if (dn != null)
             meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', dn));
+        List<String> newLore = new ArrayList<>();
         if (lore != null) {
             for (String line : lore) {
-                line = ChatColor.translateAlternateColorCodes('&', line);
+                newLore.add(ChatColor.translateAlternateColorCodes('&', line));
             }
-            meta.setLore(lore);
+            meta.setLore(newLore);
         }
 
         if (es != null)
